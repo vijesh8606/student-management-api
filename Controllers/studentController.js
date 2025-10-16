@@ -1,35 +1,13 @@
 import Student from "../Models/Student.js";
 
 // Create student
-// const createStudent = async (req, res) => {
-//   try {
-//     const { name, email, course, subjects } = req.body;
-
-//     const student = await Student.create({
-//       name,
-//       email,
-//       course,
-//       subjects,
-//     });
-
-//     res.status(201).json(student);
-//   } catch (error) {
-//     if (error.code === 11000) {
-//       res
-//         .status(400)
-//         .json({ message: "Student with this email already exists" });
-//     } else {
-//       res.status(400).json({ message: error.message });
-//     }
-//   }
-// };
 
 const createStudent = async (req, res) => {
   try {
-    const { name, email, course, subjects } = req.body;
+    const { name, email, batchYear, course, subjects } = req.body;
 
     // Use .save() to ensure pre("save") hook runs
-    const student = new Student({ name, email, course, subjects });
+    const student = new Student({ name, email, batchYear, course, subjects });
     await student.save(); // triggers pre("save") middleware
 
     res.status(201).json(student);
@@ -70,26 +48,10 @@ const getStudent = async (req, res) => {
 };
 
 // Update student
-// const updateStudent = async (req, res) => {
-//   try {
-//     const student = await Student.findByIdAndUpdate(req.params.id, req.body, {
-//       new: true,
-//       runValidators: true,
-//     });
-
-//     if (!student) {
-//       return res.status(404).json({ message: "Student not found" });
-//     }
-
-//     res.json(student);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// };
 
 const updateStudent = async (req, res) => {
   try {
-    const { name, email, course, subjects } = req.body;
+    const { name, email, batchYear, course, subjects } = req.body;
 
     let totalMarks = 0;
     let average = 0;
@@ -109,7 +71,7 @@ const updateStudent = async (req, res) => {
 
     const student = await Student.findByIdAndUpdate(
       req.params.id,
-      { name, email, course, subjects, totalMarks, average, grade },
+      { name, email, batchYear, course, subjects, totalMarks, average, grade },
       { new: true, runValidators: true }
     );
 

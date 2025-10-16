@@ -12,6 +12,8 @@ dotenv.config();
 const app = express();
 const DBURI = process.env.MONGODB_URI;
 
+console.log(DBURI);
+
 mongoose
   .connect(DBURI, {
     dbName: "Student_management",
